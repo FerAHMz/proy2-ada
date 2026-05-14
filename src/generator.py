@@ -49,6 +49,27 @@ def make_instance(n, capacity, distribution, seed):
     return Instance(instance_id, n, capacity, distribution, seed, tuple(items))
 
 
+ADVERSARIAL_CASES = [
+    (10, (5, 5, 5, 4, 4, 4, 3, 3, 3, 3)),
+    (10, (7, 7, 5, 5, 4, 4, 3, 3, 3, 3, 3, 3)),
+    (10, (6, 6, 5, 5, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2)),
+]
+
+
+def adversarial_instances():
+    """Instancias fijas donde FFD se sabe que NO encuentra el optimo.
+
+    Sirven para que el benchmark no de la impresion de que FFD siempre es
+    optimo. Cada una se verifico a mano y con la DP exacta.
+    """
+    out = []
+    for idx, (cap, items) in enumerate(ADVERSARIAL_CASES, 1):
+        n = len(items)
+        inst_id = f"n{n:02d}-adversarial-{idx}"
+        out.append(Instance(inst_id, n, cap, "adversarial", 0, items))
+    return out
+
+
 def all_instances(capacity=DEFAULT_CAPACITY):
     """Genera el set completo de instancias usado por el benchmark."""
     out = []
@@ -56,6 +77,7 @@ def all_instances(capacity=DEFAULT_CAPACITY):
         for dist in DISTRIBUTIONS:
             for seed in SEEDS:
                 out.append(make_instance(n, capacity, dist, seed))
+    out.extend(adversarial_instances())
     return out
 
 

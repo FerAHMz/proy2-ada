@@ -6,10 +6,12 @@ con un `id` de la forma `n{N}-{distribucion}-s{semilla}`.
 
 ## Parametros generales
 
-- Capacidad de cada bin: **C = 20** para todas las instancias.
+- Capacidad de cada bin: **C = 20** para las instancias aleatorias.
 - Tamanios de entrada: **n ∈ {5, 8, 10, 12, 14, 16, 18, 20}**.
 - Semillas usadas: **1, 2 y 3**.
-- Total: 8 × 3 distribuciones × 3 semillas = **72 instancias**.
+- Total instancias aleatorias: 8 × 3 distribuciones × 3 semillas = **72**.
+- Mas **3 instancias adversariales** fijas (C = 10) donde FFD se sabe que no
+  encuentra el optimo. **Total general: 75 instancias.**
 
 El tope en n = 20 viene del costo de la DP. Con O(3ⁿ), pasar de 20 ya tarda
 varios minutos por instancia, asi que se respeta ese limite para que el
@@ -104,6 +106,19 @@ el greedy FFD se acerca al optimo en distintos escenarios.
 | n20-pequenos-s1 | 20 | 20 | pequenos | 1 | 59 | [2, 5, 1, 3, 1, 4, 4, 4, 4, 2, 1, 4, 1, 4, 4, 5, 1, 4, 3, 2] |
 | n20-pequenos-s2 | 20 | 20 | pequenos | 2 | 64 | [1, 1, 1, 3, 2, 3, 3, 5, 2, 5, 1, 5, 2, 4, 4, 5, 3, 5, 4, 5] |
 | n20-pequenos-s3 | 20 | 20 | pequenos | 3 | 72 | [2, 5, 5, 2, 3, 5, 4, 5, 1, 5, 1, 4, 3, 5, 2, 2, 4, 5, 5, 4] |
+
+## Instancias adversariales
+
+Tres casos hardcodeados con capacidad C = 10. Son contraejemplos conocidos
+donde FFD no logra el optimo (ratio FFD/OPT > 1). Se incluyen para que el
+benchmark muestre que la cota teorica 11/9·OPT + 6/9 si se acerca a llenarse
+en algunas instancias y no se quede solo en ratio = 1.
+
+| id | n | C | distribucion | suma_total | items | FFD | OPT | ratio |
+|---|---|---|---|---|---|---|---|---|
+| n10-adversarial-1 | 10 | 10 | adversarial | 39 | [5, 5, 5, 4, 4, 4, 3, 3, 3, 3] | 5 | 4 | 1.25 |
+| n12-adversarial-2 | 12 | 10 | adversarial | 50 | [7, 7, 5, 5, 4, 4, 3, 3, 3, 3, 3, 3] | 6 | 5 | 1.20 |
+| n14-adversarial-3 | 14 | 10 | adversarial | 50 | [6, 6, 5, 5, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2] | 6 | 5 | 1.20 |
 
 ## Reproducibilidad
 
