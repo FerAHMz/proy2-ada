@@ -1,38 +1,38 @@
 # Listado de instancias de prueba (entregable 5a)
 
 Estas son las instancias generadas por `src/generator.py` y que se usan en el
-benchmark para medir tiempos de ejecucion de DP y FFD. Cada una se identifica
-con un `id` de la forma `n{N}-{distribucion}-s{semilla}`.
+benchmark para medir tiempos de ejecución de DP y FFD. Cada una se identifica
+con un `id` de la forma `n{N}-{distribución}-s{semilla}`.
 
-## Parametros generales
+## Parámetros generales
 
 - Capacidad de cada bin: **C = 20** para las instancias aleatorias.
-- Tamanios de entrada: **n ∈ {5, 8, 10, 12, 14, 16, 18, 20}**.
+- Tamaños de entrada: **n ∈ {5, 8, 10, 12, 14, 16, 18, 20}**.
 - Semillas usadas: **1, 2 y 3**.
 - Total instancias aleatorias: 8 × 3 distribuciones × 3 semillas = **72**.
-- Mas **3 instancias adversariales** fijas (C = 10) donde FFD se sabe que no
-  encuentra el optimo. **Total general: 75 instancias.**
+- Más **3 instancias adversariales** fijas (C = 10) donde FFD se sabe que no
+  encuentra el óptimo. **Total general: 75 instancias.**
 
 El tope en n = 20 viene del costo de la DP. Con O(3ⁿ), pasar de 20 ya tarda
-varios minutos por instancia, asi que se respeta ese limite para que el
+varios minutos por instancia, así que se respeta ese límite para que el
 benchmark termine en tiempo razonable.
 
 ## Distribuciones usadas
 
-| Distribucion | Rango de tamanios | Idea |
+| Distribución | Rango de tamaños | Idea |
 |---|---|---|
 | uniforme | `[1, C]` | Caso general, mezcla de objetos chicos y grandes. |
-| grandes | `[C/2, C]` | Cada objeto ocupa mas de la mitad del bin, casi siempre va uno por bin. |
+| grandes | `[C/2, C]` | Cada objeto ocupa más de la mitad del bin, casi siempre va uno por bin. |
 | pequenos | `[1, C/4]` | Muchos objetos chicos, varios entran por bin. |
 
 Las tres distribuciones se eligieron para forzar comportamientos distintos:
-en `grandes` la solucion optima esta cerca de `n` bins, en `pequenos` esta
-cerca de la cota de volumen, y `uniforme` queda en medio. Asi se observa si
-el greedy FFD se acerca al optimo en distintos escenarios.
+en `grandes` la solución óptima está cerca de `n` bins, en `pequenos` está
+cerca de la cota de volumen, y `uniforme` queda en medio. Así se observa si
+el greedy FFD se acerca al óptimo en distintos escenarios.
 
 ## Tabla de instancias
 
-| id | n | C | distribucion | semilla | suma_total | items |
+| id | n | C | distribución | semilla | suma_total | items |
 |---|---|---|---|---|---|---|
 | n05-uniforme-s1 | 5 | 20 | uniforme | 1 | 40 | [5, 19, 3, 9, 4] |
 | n05-uniforme-s2 | 5 | 20 | uniforme | 2 | 26 | [2, 3, 3, 12, 6] |
@@ -110,11 +110,11 @@ el greedy FFD se acerca al optimo en distintos escenarios.
 ## Instancias adversariales
 
 Tres casos hardcodeados con capacidad C = 10. Son contraejemplos conocidos
-donde FFD no logra el optimo (ratio FFD/OPT > 1). Se incluyen para que el
-benchmark muestre que la cota teorica 11/9·OPT + 6/9 si se acerca a llenarse
+donde FFD no logra el óptimo (ratio FFD/OPT > 1). Se incluyen para que el
+benchmark muestre que la cota teórica 11/9·OPT + 6/9 sí se acerca a llenarse
 en algunas instancias y no se quede solo en ratio = 1.
 
-| id | n | C | distribucion | suma_total | items | FFD | OPT | ratio |
+| id | n | C | distribución | suma_total | items | FFD | OPT | ratio |
 |---|---|---|---|---|---|---|---|---|
 | n10-adversarial-1 | 10 | 10 | adversarial | 39 | [5, 5, 5, 4, 4, 4, 3, 3, 3, 3] | 5 | 4 | 1.25 |
 | n12-adversarial-2 | 12 | 10 | adversarial | 50 | [7, 7, 5, 5, 4, 4, 3, 3, 3, 3, 3, 3] | 6 | 5 | 1.20 |
@@ -122,7 +122,7 @@ en algunas instancias y no se quede solo en ratio = 1.
 
 ## Reproducibilidad
 
-Para regenerar esta lista se pueden usar las funciones del modulo:
+Para regenerar esta lista se pueden usar las funciones del módulo:
 
 ```python
 from generator import all_instances, print_all_instances
